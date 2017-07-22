@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: SpringBootGrpc2
+  jpa:
+    hibernate:
+      ddl-auto: none
+  datasource:
+    url: jdbc:mysql://localhost:3306/vanilladb?useSSL=false&verifyServerCertificate=false
+    username: root
+    password: 123
+
+security:
+    user:
+      password: password
+    oauth2:
+      resource:
+        filter-order: 3
+
+
+#db:
+#  driver: com.mysql.jdbc.Driver
+#  url: jdbc:mysql://localhost:3306/vanilladb?useSSL=false&verifyServerCertificate=false
+#  username: root
+#  password: 123
+
+#spring:
+#  jpa:
+#    hibernate:
+#      ddl-auto: create
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/vanilladb?useSSL=false&verifyServerCertificate=false
+#    username: root
+#    password: 123
+
+
+hibernate:
+  dialect: org.hibernate.dialect.MySQL5Dialect
+  hbm2ddl:
+    auto: create
+  ejb:
+    naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
+  show_sql: false
+  format_sql: true
