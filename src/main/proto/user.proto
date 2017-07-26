@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.binara.controller.grpc";
+option java_outer_classname = "UserProto";
+option objc_class_prefix = "STD";
+
+service User {
+    rpc getUser (UserRequest) returns (UserResponse) {}
+}
+
+message UserRequest {
+    sint64 id = 1;
+}
+
+message UserResponse {
+    sint64 id = 1;
+    string username = 2;
+    string password = 3;
+}
