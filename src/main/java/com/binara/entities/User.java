@@ -14,7 +14,6 @@ public class User {
 
     private String password;
 
-//    @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", catalog = "vanilladb", joinColumns = {
             @JoinColumn(name = "user_id", nullable = false, updatable = false) },
@@ -22,7 +21,7 @@ public class User {
                     nullable = false, updatable = false) })
     private List<Role> roles;
 
-    User() {}
+    public User() {}
 
     public User(String username, String password, List<Role> roles) {
         this.username = username;

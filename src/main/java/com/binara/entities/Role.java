@@ -12,7 +12,6 @@ public class Role {
 
     String name;
 
-//    @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", catalog = "vanilladb", joinColumns = {
             @JoinColumn(name = "role_id", nullable = false, updatable = false) },
@@ -20,7 +19,7 @@ public class Role {
                     nullable = false, updatable = false) })
     private List<User> users;
 
-    Role() {}
+    public Role() {}
 
     public Role(String name) {
         this.name = name;
