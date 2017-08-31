@@ -2,13 +2,12 @@ package com.binara.controller.grpc;
 
 
 import com.binara.entities.Student;
-import com.binara.repositories.StudentRepository;
 import com.binara.services.StudentService;
 import io.grpc.stub.StreamObserver;
 import net.devh.springboot.autoconfigure.grpc.server.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 
-import java.util.ArrayList;
 
 /**
  * Created by binara on 7/8/17.
@@ -20,12 +19,16 @@ public class StudentController extends StudentGrpc.StudentImplBase {
     private StudentService studentService;
 
     @Override
+//    @PreAuthorize("hasAuthority('USER')")
     public void getStudent(StudentRequest request, StreamObserver<StudentResponse> responseObserver) {
         Student student = studentService.getStudent(request.getId());
         StudentResponse response = StudentResponse.newBuilder()
                 .setId(student.getId())
                 .setName(student.getName())
                 .setAge(student.getAge())
+//                .setId(1)
+//                .setName("test-name")
+//                .setAge(43)
                 .build();
         responseObserver.onNext(response);
         responseObserver.onCompleted();

@@ -2,23 +2,22 @@ package com.binara;
 
 import com.binara.config.CustomUserDetails;
 import com.binara.controller.grpc.StudentController;
-import com.binara.controller.grpc.UserController;
 import com.binara.entities.Role;
 import com.binara.entities.User;
 import com.binara.repositories.UserRepository;
 import com.binara.services.RoleService;
 import com.binara.services.UserService;
-import io.grpc.Server;
 import io.grpc.ServerBuilder;
+import io.grpc.netty.GrpcSslContexts;
+import io.grpc.netty.NettyServerBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.io.IOException;
+import java.io.File;
 import java.util.Arrays;
 
 
@@ -30,6 +29,7 @@ public class SpringBootGrpc2 {
 
     public static void main(String[] args) {
         SpringApplication.run(SpringBootGrpc2.class, args);
+//        startGrpcServer(true);
     }
 
     /**
@@ -64,14 +64,39 @@ public class SpringBootGrpc2 {
         return username -> new CustomUserDetails(repository.findByUsername(username));
     }
 
-    @Deprecated
-    private static void startGrpcServer() throws InterruptedException, IOException {
-        Server server = ServerBuilder.forPort(8085)
-                .addService(new StudentController())
-                .addService(new UserController())
-                .build();
-        server.start();
-        server.awaitTermination();
+    private static void startGrpcServer(boolean secured) {
+        try {
+            if (secured) {
+                NettyServerBuilder.forPort(9095)
+                        .sslContext(GrpcSslContexts.forServer(
+                                new File("src/main/resources/localhost-cert.crt"),
+                                new File("src/main/resources/localhost-primarykey.key")
+                        ).build())
+                        .addService(new StudentController())
+                        .build()
+                        .start()
+                        .awaitTermination();
+
+//                ServerBuilder.forPort(9095)
+//                        .useTransportSecurity(
+//                                new File("src/main/resources/localhost-cert.crt"),
+//                                new File("src/main/resources/localhost-primarykey.key")
+//                        )
+//                        .addService(new StudentController())
+//                        .build()
+//                        .start()
+//                        .awaitTermination();
+            } else {
+                ServerBuilder.forPort(9090)
+                        .addService(new StudentController())
+                        .build()
+                        .start()
+                        .awaitTermination();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.printf(ex.getMessage());
+        }
     }
 
 }

@@ -9,12 +9,53 @@ spring:
     username: root
     password: 123
 
-security:
-    user:
-      password: password
-    oauth2:
-      resource:
-        filter-order: 3
+#security:
+#    user:
+#      password: password
+#    oauth2:
+#      resource:
+#        filter-order: 3
+
+
+
+server:
+  port: 8453
+  ssl:
+    key-store: classpath:localhost.jks
+    key-store-password: binara
+    key-alias: localhost
+    key-password: binara
+    key-store-provider: SUN
+    key-store-type: JKS
+
+
+grpc:
+  server:
+    port: 9095
+    security:
+      enabled: true
+      certificate-chain-path: /home/binara/Documents/Other_Projects/Vindana_Viztaa_Enterprise/Sample_Codes/SpringBootGrpc2/src/main/resources/localhost-cert.crt
+      certificate-path: /home/binara/Documents/Other_Projects/Vindana_Viztaa_Enterprise/Sample_Codes/SpringBootGrpc2/src/main/resources/localhost-primarykey.key
+#      certificate-path: localhost.p12
+#  client:
+#    ssl-server:
+#      host:
+#        - 127.0.0.1
+#      port:
+#        - 9095
+
+
+#authentication:
+#  providers:
+#  - id: oauth2
+#    # The value below should be unique
+#    issuer: https://localhost:8453/oauth/token
+#    jwks_uri: classpath:localhost-cert.crt
+#  rules:
+#  - selector: "*"
+#    requirements:
+#      - provider_id: oauth2
+
 
 
 #db:
@@ -33,11 +74,14 @@ security:
 #    password: 123
 
 
-hibernate:
-  dialect: org.hibernate.dialect.MySQL5Dialect
-  hbm2ddl:
-    auto: create
-  ejb:
-    naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
-  show_sql: false
-  format_sql: true
+
+
+
+#hibernate:
+#  dialect: org.hibernate.dialect.MySQL5Dialect
+#  hbm2ddl:
+#    auto: create
+#  ejb:
+#    naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
+#  show_sql: false
+#  format_sql: true

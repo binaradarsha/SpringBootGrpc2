@@ -3,10 +3,10 @@ package com.binara.controller.grpc;
 import com.binara.entities.User;
 import com.binara.services.UserService;
 import io.grpc.stub.StreamObserver;
-import net.devh.springboot.autoconfigure.grpc.server.GrpcService;
+//import net.devh.springboot.autoconfigure.grpc.server.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@GrpcService(UserGrpc.class)
+//@GrpcService(UserGrpc.class)
 public class UserController extends UserGrpc.UserImplBase {
 
     @Autowired
