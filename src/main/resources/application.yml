@@ -36,6 +36,7 @@ grpc:
       enabled: true
       certificate-chain-path: /home/binara/Documents/Other_Projects/Vindana_Viztaa_Enterprise/Sample_Codes/SpringBootGrpc2/src/main/resources/localhost-cert.crt
       certificate-path: /home/binara/Documents/Other_Projects/Vindana_Viztaa_Enterprise/Sample_Codes/SpringBootGrpc2/src/main/resources/localhost-primarykey.key
+#      jwks_uri: /home/binara/Documents/Other_Projects/Vindana_Viztaa_Enterprise/Sample_Codes/SpringBootGrpc2/src/main/resources/localhost-publicKey-JWK.json
 #      certificate-path: localhost.p12
 #  client:
 #    ssl-server:
@@ -43,19 +44,27 @@ grpc:
 #        - 127.0.0.1
 #      port:
 #        - 9095
+#  authentication:
+#    providers:
+#    - id: oauth2
+#      # The value below should be unique
+#      issuer: https://localhost:8453/oauth/token
+#      jwks_uri: /home/binara/Documents/Other_Projects/Vindana_Viztaa_Enterprise/Sample_Codes/SpringBootGrpc2/src/main/resources/localhost-publicKey-JWK.json
+#    rules:
+#    - selector: "*"
+#      requirements:
+#        - provider_id: oauth2
 
 
-#authentication:
-#  providers:
-#  - id: oauth2
-#    # The value below should be unique
-#    issuer: https://localhost:8453/oauth/token
-#    jwks_uri: classpath:localhost-cert.crt
-#  rules:
-#  - selector: "*"
-#    requirements:
-#      - provider_id: oauth2
-
+#security:
+#  oauth2:
+#    resource:
+#      jwt:
+#        # Tells the JWT framework to fetch the public key from the authorization server during startup
+#        # Note: The authorization server needs to be running...
+#        key-uri: /home/binara/Documents/Other_Projects/Vindana_Viztaa_Enterprise/Sample_Codes/SpringBootGrpc2/src/main/resources/localhost-publicKey-JWK.json
+#      jwk:
+#        key-set-uri: /home/binara/Documents/Other_Projects/Vindana_Viztaa_Enterprise/Sample_Codes/SpringBootGrpc2/src/main/resources/localhost-publicKey-JWK.json
 
 
 #db:

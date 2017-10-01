@@ -1,6 +1,7 @@
 package com.binara.controller.grpc;
 
 
+import com.binara.config.AuthServerInterceptor;
 import com.binara.entities.Student;
 import com.binara.services.StudentService;
 import io.grpc.stub.StreamObserver;
@@ -12,14 +13,14 @@ import org.springframework.security.access.prepost.PreAuthorize;
 /**
  * Created by binara on 7/8/17.
  */
-@GrpcService(StudentGrpc.class)
+@GrpcService(value = StudentGrpc.class, interceptors = {AuthServerInterceptor.class})
 public class StudentController extends StudentGrpc.StudentImplBase {
 
     @Autowired
     private StudentService studentService;
 
     @Override
-//    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasAuthority('USER')")
     public void getStudent(StudentRequest request, StreamObserver<StudentResponse> responseObserver) {
         Student student = studentService.getStudent(request.getId());
         StudentResponse response = StudentResponse.newBuilder()

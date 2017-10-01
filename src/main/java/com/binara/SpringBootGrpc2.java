@@ -13,8 +13,10 @@ import io.grpc.netty.NettyServerBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.io.File;
@@ -61,7 +63,13 @@ public class SpringBootGrpc2 {
      */
     @Bean
     public UserDetailsService userDetailsService(final UserRepository repository) {
-        return username -> new CustomUserDetails(repository.findByUsername(username));
+        return new UserDetailsService() {
+            @Override
+            public UserDetails loadUserByUsername(String username) {
+                return new CustomUserDetails(repository.findByUsername(username));
+            }
+        };
+//        return username -> new CustomUserDetails(repository.findByUsername(username));
     }
 
     private static void startGrpcServer(boolean secured) {
