@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+package grpc;
+
 option java_multiple_files = true;
 option java_package = "com.binara.controller.grpc";
 option java_outer_classname = "StudentProto";
