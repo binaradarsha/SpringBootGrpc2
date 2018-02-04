@@ -5,7 +5,8 @@ spring:
     hibernate:
       ddl-auto: none
   datasource:
-    url: jdbc:mysql://localhost:3306/vanilladb?useSSL=false&verifyServerCertificate=false
+#    url: jdbc:mysql://localhost:3306/vanilladb?useSSL=false&verifyServerCertificate=false
+    url: jdbc:mysql://35.200.222.190:3306/vanilladb?useSSL=false&verifyServerCertificate=false
     username: root
     password: 123
 
@@ -17,25 +18,27 @@ spring:
 #        filter-order: 3
 
 
-
+# Tomcat settings
 server:
   port: 8453
   ssl:
     key-store: classpath:localhost.jks
     key-store-password: binara
-    key-alias: localhost
+    key-alias: 35.200.176.190
     key-password: binara
     key-store-provider: SUN
     key-store-type: JKS
 
-
+# GRPC settings
 grpc:
   server:
     port: 9095
     security:
       enabled: true
-      certificate-chain-path: /home/binara/Documents/Other_Projects/Vindana_Viztaa_Enterprise/Sample_Codes/SpringBootGrpc2/src/main/resources/localhost-cert.crt
-      certificate-path: /home/binara/Documents/Other_Projects/Vindana_Viztaa_Enterprise/Sample_Codes/SpringBootGrpc2/src/main/resources/localhost-primarykey.key
+      #certificate-chain-path: /home/binara/Documents/Other_Projects/Vindana_Viztaa_Enterprise/Sample_Codes/SpringBootGrpc2/src/main/resources/localhost-cert.crt
+      #certificate-path: /home/binara/Documents/Other_Projects/Vindana_Viztaa_Enterprise/Sample_Codes/SpringBootGrpc2/src/main/resources/localhost-primarykey.key
+      certificate-chain-path: /home/binara/ssl_cert/mycert1.crt
+      certificate-path: /home/binara/ssl_cert/mycert1.key
 #      jwks_uri: /home/binara/Documents/Other_Projects/Vindana_Viztaa_Enterprise/Sample_Codes/SpringBootGrpc2/src/main/resources/localhost-publicKey-JWK.json
 #      certificate-path: localhost.p12
 #  client:

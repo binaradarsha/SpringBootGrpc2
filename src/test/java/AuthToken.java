@@ -8,8 +8,10 @@ import java.util.LinkedHashMap;
 
 public class AuthToken {
 
-    public static final String AUTH_SERVER_URI_UNSECURED = "http://localhost:8080/oauth/token";
-    public static final String AUTH_SERVER_URI_SECURED = "https://localhost:8453/oauth/token";
+    public static final String AUTH_SERVER_URI_UNSECURED_LOCALHOST = "http://localhost:8080/oauth/token";
+    public static final String AUTH_SERVER_URI_UNSECURED_GOOGLE_SERVER = "http://" + SpringGrpcClient.GOOGLE_SERVER + ":8453/oauth/token";
+    public static final String AUTH_SERVER_URI_SECURED_LOCALHOST = "https://localhost:8453/oauth/token";
+    public static final String AUTH_SERVER_URI_SECURED_GOOGLE_SERVER = "https://" + SpringGrpcClient.GOOGLE_SERVER + ":8453/oauth/token";
 
     public static final String QPM_PASSWORD_GRANT = "?grant_type=password&username=abc&password=123";
 
@@ -37,6 +39,7 @@ public class AuthToken {
 
         HttpHeaders headers = getHeaders();
         headers.add("Authorization", "Basic " + base64ClientCredentials);
+        headers.add("Accept", "application/hal+json");
         return headers;
     }
 
@@ -45,7 +48,8 @@ public class AuthToken {
      */
     @SuppressWarnings({"unchecked"})
     public AuthTokenInfo sendTokenRequest() {
-        String authServerUri = secured ? AUTH_SERVER_URI_SECURED : AUTH_SERVER_URI_UNSECURED;
+//        String authServerUri = secured ? AUTH_SERVER_URI_SECURED : AUTH_SERVER_URI_UNSECURED;
+        String authServerUri = secured ? AUTH_SERVER_URI_SECURED_GOOGLE_SERVER : AUTH_SERVER_URI_UNSECURED_GOOGLE_SERVER;
 
         RestTemplate restTemplate = new RestTemplate();
 

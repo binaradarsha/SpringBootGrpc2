@@ -6,8 +6,6 @@ import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
 import io.grpc.netty.GrpcSslContexts;
 import io.grpc.netty.NettyChannelBuilder;
-//import net.devh.springboot.autoconfigure.grpc.client.GrpcClient;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -20,6 +18,9 @@ import java.io.File;
  */
 //@SpringBootApplication
 public class SpringGrpcClient {
+
+    public static final String LOCALHOST = "localhost";
+    public static final String GOOGLE_SERVER = "35.200.176.190";
 
 //    @GrpcClient(value = "ssl-server", interceptors = {AuthInterceptor.class})
 //    @GrpcClient("ssl-server")
@@ -55,14 +56,16 @@ public class SpringGrpcClient {
             HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
                 @Override
                 public boolean verify(String hostname, SSLSession sslSession) {
-                    return hostname.equals("localhost");
+                    return hostname.equals("localhost") || hostname.equals("35.200.176.190");
                 }
             });
 
-            System.out.println(">>> cert exists : " + new File("src/main/resources/localhost-cert.crt").exists());
+//            System.out.println(">>> cert exists : " + new File("src/main/resources/localhost-cert.crt").exists());
+            System.out.println(">>> cert exists : " + new File("/home/binara/Desktop/ssl_cert/mycert1.crt").exists());
 
-            return NettyChannelBuilder.forAddress("localhost", 9095)
-                    .sslContext(GrpcSslContexts.forClient().trustManager(new File("src/main/resources/localhost-cert.crt")).build())
+            return NettyChannelBuilder.forAddress(GOOGLE_SERVER, 9095)
+//                    .sslContext(GrpcSslContexts.forClient().trustManager(new File("src/main/resources/localhost-cert.crt")).build())
+                    .sslContext(GrpcSslContexts.forClient().trustManager(new File("/home/binara/Desktop/ssl_cert/mycert1.crt")).build())
                     .build();
 
         } catch (SSLException e) {
@@ -100,7 +103,7 @@ public class SpringGrpcClient {
 
         System.out.println();
         System.out.println(">>> Testing Grpc: Student");
-        client.fetchStudent(3);
+        client.fetchStudent(2);
 
 //        System.out.println();
 //        System.out.println(">>> Testing Grpc: User");
